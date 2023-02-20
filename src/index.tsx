@@ -4,7 +4,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { ThemeProvider } from "styled-components";
 import App from "./App";
 import { RecoilRoot } from "recoil";
-import { darkTheme } from "./theme";
+import { theme } from "./theme";
 import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
@@ -62,9 +62,10 @@ table {
 body {
   font-weight: 300;
   font-family: 'Source Sans Pro', sans-serif;
-  color:black;
+  color:${(props) => props.theme.white.darker};
   line-height: 1.2;
-  background:linear-gradient(135deg,#e09,#d0e);
+background-color: black;
+
 }
 a {
   text-decoration:none;
@@ -79,9 +80,11 @@ const root = createRoot(container!); // createRoot(container!) if you use TypeSc
 
 root.render(
   <RecoilRoot>
-    <ThemeProvider theme={darkTheme}>
-      <GlobalStyle />
-      <App />
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider theme={theme}>
+        <GlobalStyle />
+        <App />
+      </ThemeProvider>
+    </QueryClientProvider>
   </RecoilRoot>
 );
